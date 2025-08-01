@@ -56,18 +56,12 @@ This project allows users to send messages and get smart replies from a language
 ### 🔹 Frontend (HTML/CSS/JS)
 
 [Open HTML Page](https://github.com/JawaherMQ5/Flask-OpenAI-Interactive-Chatbot/blob/main/index.html)
+
 ---
 
 ### 🔹 Backend (Python - Flask)
 
-<details>
-<summary>Click to expand</summary>
-Python
-
-
-# Paste your app.py code here
-
-</details>
+[View Python Code](https://github.com/JawaherMQ5/Flask-OpenAI-Interactive-Chatbot/blob/main/app.py)
 
 ---
 
