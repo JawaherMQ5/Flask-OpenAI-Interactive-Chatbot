@@ -22,21 +22,16 @@ This project allows users to send messages and get smart replies from a language
    [https://www.python.org/downloads](https://www.python.org/downloads)
 
 2. Install dependencies:
-
-  
-Bash ->
-   pip install flask flask-cors openai
+   Bash -> pip install flask flask-cors openai
    
 3. Add your OpenAI API key in app.py: 
-Python ->
-   openai.api_key = "your-api-key-here"
+   Python -> openai.api_key = "your-api-key-here"
    
 4. Run the server:
-Bash ->
-   python app.py
+   Bash -> python app.py
    
-5. Open your browser: ->
-   http://127.0.0.1:5000/
+5. Open your browser:
+   -> http://127.0.0.1:5000/
    
 ---
 
