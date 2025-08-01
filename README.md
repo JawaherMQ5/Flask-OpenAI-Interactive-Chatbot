@@ -47,7 +47,7 @@ This project allows users to send messages and get smart replies from a language
 
 ## 🖼 Preview
 
-📁![Chatbot Preview](screenshots/chatbot_preview.png)
+![Chatbot Preview](screenshots/chatbot_preview.png)
 
 ---
 
