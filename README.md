@@ -47,11 +47,7 @@ This project allows users to send messages and get smart replies from a language
 
 ## 🖼 Preview
 
-> 📸 Add a screenshot of your chatbot interface below:
-copy
-
-
-📁 screenshots/chatbot_preview.png
+📁 https://github.com/JawaherMQ5/Flask-OpenAI-Interactive-Chatbot/blob/main/chatbot_preview.png
 
 ---
 
