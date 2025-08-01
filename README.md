@@ -18,8 +18,7 @@ This project allows users to send messages and get smart replies from a language
 
 ## 🚀 How to Run the Project
 
-1. Install Python if you haven’t already:  
-   [https://www.python.org/downloads](https://www.python.org/downloads)
+1. Install Python if you haven’t already: ->[https://www.python.org/downloads](https://www.python.org/downloads)
 
 2. Install dependencies:
    Bash -> pip install flask flask-cors openai
