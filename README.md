@@ -47,7 +47,7 @@ This project allows users to send messages and get smart replies from a language
 
 ## 🖼 Preview
 
-![Chatbot Preview](screenshots/chatbot_preview.png)
+![Chatbot Preview](https://github.com/JawaherMQ5/Flask-OpenAI-Interactive-Chatbot/blob/main/chatbot_preview.png)
 
 ---
 
