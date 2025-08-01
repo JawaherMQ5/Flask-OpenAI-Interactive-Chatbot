@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>بوت دردشة ذكي</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 15px;
+      width: 95%;
+      max-width: 600px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00bcd4;
+      margin-bottom: 15px;
+    }
+
+    #chatbox {
+      background-color: #101010;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .user {
+      background-color: #2196f3;
+      color: white;
+      margin-right: auto;
+      text-align: right;
+    }
+
+    .bot {
+      background-color: #4caf50;
+      color: white;
+      margin-left: auto;
+      text-align: left;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 8px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background-color: #2c2c2c;
+      color: white;
+    }
+
+    button {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      background-color: #00bcd4;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <h2>🤖 بوت دردشة</h2>
+
+    <div id="chatbox"></div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="اكتب رسالتك...">
+      <button onclick="sendMessage()">إرسال</button>
+      <button id="recordButton">🎙️</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+
+    function addMessage(sender, text, cls) {
+      const msg = document.createElement('div');
+      msg.className = 'message ' + cls;
+      msg.innerHTML =` <strong>${sender}:</strong> ${text}`;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const userInput = document.getElementById('userInput');
+      const userText = userInput.value;
+
+      if (!userText) return;
+
+      addMessage("أنت", userText, "user");
+      userInput.value = "";
+
+      addMessage("البوت", "جاري التفكير...", "bot");
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: userText })
+        });
+
+        const data = await response.json();
+        chatbox.lastChild.remove(); // حذف "جاري التفكير"
+
+        if (data.reply) {
+          addMessage("البوت", data.reply, "bot");
+        } else {
+          addMessage("خطأ", "ما قدر يرد البوت", "bot");
+        }
+      } catch (error) {
+        chatbox.lastChild.remove();
+        addMessage("خطأ", "فشل الاتصال بالخادم", "bot");
+        console.error(error);
+      }
+    }
+
+    // 🎙️ تسجيل صوت
+    const recordBtn = document.getElementById('recordButton');
+
+    recordBtn.addEventListener('click', () => {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("متصفحك لا يدعم تسجيل الصوت، استخدمي Google Chrome");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "ar-SA";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recordBtn.disabled = true;
+      recordBtn.textContent = "⏳";
+
+      recognition.start();
+
+      recognition.onresult = (event) => {
+const transcript = event.results[0][0].transcript;
+        document.getElementById('userInput').value = transcript;
+        sendMessage();
+
+        recordBtn.disabled = false;
+        recordBtn.textContent = "🎙️";
+      };
+
+      recognition.onerror = (event) => {
+        alert("خطأ: " + event.error);
+        recordBtn.disabled = false;
+        recordBtn.textContent = "🎙️";
+      };
+
+      recognition.onend = () => {
+        recordBtn.disabled = false;
+        recordBtn.textContent = "🎙️";
+      };
+    });
+  </script>
+</body>
+</html>
